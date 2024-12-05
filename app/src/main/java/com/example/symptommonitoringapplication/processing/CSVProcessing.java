@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.symptommonitoringapplication.constants.Constants;
 import com.example.symptommonitoringapplication.R;
 import com.example.symptommonitoringapplication.calculations.RespiratoryRate;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class CSVProcessing {
         InputStreamReader inputStreamReader = new InputStreamReader(csvFile);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         String line;
-        while ((line = bufferedReader.readLine()) != null) {
+        while ((line = BoundedLineReader.readLine(bufferedReader, 5_000_000)) != null) {
             try {
                 float value = Float.parseFloat(line);
                 csvValues.add(value);
